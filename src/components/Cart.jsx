@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiFillDelete } from "react-icons/ai";
+import { useSelector } from 'react-redux';
 const img1 =
     "https://www.reliancedigital.in/medias/Apple-MGN63HNA-Laptops-491946461-i-1-1200Wx1200H?context=bWFzdGVyfGltYWdlc3wxNzczNDJ8aW1hZ2UvanBlZ3xpbWFnZXMvaDVhL2gyZC85NDQzMDgzNTgzNTE4LmpwZ3xhYzRiNWIxZGQ2NjNiNWIyYjI0Y2ZkYTZlZWQ3MTFjZTMxYzVmNDBiNmM5Mzk5OTM2OGVkZmExMjMyYjIxNDQ4";
 const img2 =
@@ -8,11 +9,20 @@ const img2 =
 
 
 const Cart = () => {
+    const { cartItems } = useSelector((state) => state.cart);
     return (
-        <div className='cart'>
-
+        <> <div className='cart'>
             <main>
-                <CartItem name={"Mac"} price={"200"} imgSrc={img1} />
+                {
+                    cartItems.length > 0 ? (
+                        cartItems.map(i => (
+                            < CartItem name={i.name} price={i.price} imgSrc={i.imgSrc} />
+                        ))
+                    ) : <h1>No Items found</h1>
+                }
+
+                {/* <CartItem name={"Mac"} price={"200"} imgSrc={img1} /> */}
+                {/* <CartItem name={"Shoe"} price={"200"} imgSrc={img2} /> */}
             </main>
             <aside>
                 <h2>Subtotal: ${200}</h2>
@@ -21,6 +31,7 @@ const Cart = () => {
                 <h2>Total: ${200}</h2>
             </aside>
         </div>
+        </>
     )
 };
 
@@ -40,4 +51,4 @@ const CartItem = ({ imgSrc, name, price, qty, decrement, increment, deleteHandle
     </div>
 )
 
-export default Cart
+export default Cart;

@@ -1,5 +1,6 @@
 import React from 'react';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 const img1 =
   "https://www.reliancedigital.in/medias/Apple-MGN63HNA-Laptops-491946461-i-1-1200Wx1200H?context=bWFzdGVyfGltYWdlc3wxNzczNDJ8aW1hZ2UvanBlZ3xpbWFnZXMvaDVhL2gyZC85NDQzMDgzNTgzNTE4LmpwZ3xhYzRiNWIxZGQ2NjNiNWIyYjI0Y2ZkYTZlZWQ3MTFjZTMxYzVmNDBiNmM5Mzk5OTM2OGVkZmExMjMyYjIxNDQ4";
 const img2 =
@@ -7,6 +8,7 @@ const img2 =
 
 
 const Home = () => {
+  const dispatch = useDispatch();
   const productList = [{
     id: 1,
     name: "Mac",
@@ -22,12 +24,12 @@ const Home = () => {
 
   const addToCartHandler = (options) => {
     console.log(options);
-    try {
-      toast.success('Item added successfully');
-    } catch (e) {
-      toast.error('Something went wrong!');
-    }
-  }
+    dispatch({
+      type: "addToCart",
+      payload: options,
+    });
+    toast.success('Item added successfully');
+  };
 
 
   return (

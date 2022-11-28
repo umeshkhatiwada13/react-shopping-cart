@@ -1,22 +1,51 @@
 import React from 'react';
 import { AiFillDelete } from "react-icons/ai";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const Cart = () => {
+    const dispatch = useDispatch();
     const { cartItems } = useSelector((state) => state.cart);
+    const increment = (id) => {
+        dispatch({
+            type: "addToCart",
+            payload: { id },
+        })
+    };
+    const decrement = (id) => {
+        dispatch({
+            type: "decrement",
+            payload: id,
+        })
+    };
+    const deleteFromCart = (id) => {
+        dispatch({
+            type: "deleteFromCart",
+            payload: id,
+        })
+    }
+
     return (
-        <> <div className='cart'>
+        <div className='cart'>
             <main>
                 {
                     cartItems.length > 0 ? (
-                        cartItems.map(i => (
-                            < CartItem name={i.name} key={i.id} price={i.price} imgSrc={i.imgSrc} />
+                        cartItems.map((i) => (
+                            < CartItem
+                                qty={i.quantity}
+                                name={i.name}
+                                key={i.id}
+                                id={i.id}
+                                price={i.price}
+                                imgSrc={i.imgSrc}
+                                increment={increment}
+                                decrement={decrement}
+                                deleteHandler={deleteFromCart}
+
+                            />
                         ))
                     ) : <h1>No Items found</h1>
                 }
-
-                {/* <CartItem name={"Mac"} price={"200"} imgSrc={img1} /> */}
-                {/* <CartItem name={"Shoe"} price={"200"} imgSrc={img2} /> */}
             </main>
             <aside>
                 <h2>Subtotal: ${200}</h2>
@@ -25,11 +54,19 @@ const Cart = () => {
                 <h2>Total: ${200}</h2>
             </aside>
         </div>
-        </>
     )
 };
 
-const CartItem = ({ imgSrc, name, price, qty, decrement, increment, deleteHandler, id }) => (
+const CartItem = ({
+    imgSrc,
+    name,
+    price,
+    qty,
+    decrement,
+    increment,
+    deleteHandler,
+    id,
+}) => (
     <div className="cartItem">
         <img src={imgSrc} alt="item" />
         <article>
@@ -41,6 +78,7 @@ const CartItem = ({ imgSrc, name, price, qty, decrement, increment, deleteHandle
             <p>{qty}</p>
             <button onClick={() => increment(id)}>+</button>
         </div>
+
         <AiFillDelete onClick={() => deleteHandler(id)} />
     </div>
 )

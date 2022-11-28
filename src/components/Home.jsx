@@ -17,13 +17,12 @@ const Home = () => {
   },
   {
     id: 2,
-    name: "Earphone",
+    name: "Shoe",
     price: 50,
     imgSrc: img2
   },]
 
   const addToCartHandler = (options) => {
-    console.log(options);
     dispatch({
       type: "addToCart",
       payload: options,
@@ -51,7 +50,6 @@ const Home = () => {
 };
 
 const ProductCard = ({ id, name, price, imgSrc, handler }) => (
-  // console.log('data ', name);
   <div className="productCard">
     <img src={imgSrc} alt={name} />
     <p>{name}</p>

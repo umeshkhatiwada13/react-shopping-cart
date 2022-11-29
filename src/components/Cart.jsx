@@ -5,24 +5,27 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const Cart = () => {
     const dispatch = useDispatch();
-    const { cartItems } = useSelector((state) => state.cart);
+    const { cartItems, subTotal, tax, shipping, total } = useSelector((state) => state.cart);
     const increment = (id) => {
         dispatch({
             type: "addToCart",
             payload: { id },
-        })
+        });
+        dispatch({ type: "calculateTotal" });
     };
     const decrement = (id) => {
         dispatch({
             type: "decrement",
             payload: id,
-        })
+        });
+        dispatch({ type: "calculateTotal" });
     };
     const deleteFromCart = (id) => {
         dispatch({
             type: "deleteFromCart",
             payload: id,
-        })
+        });
+        dispatch({ type: "calculateTotal" });
     }
 
     return (
@@ -48,10 +51,10 @@ const Cart = () => {
                 }
             </main>
             <aside>
-                <h2>Subtotal: ${200}</h2>
-                <h2>Shipping: ${200}</h2>
-                <h2>Tax: ${200}</h2>
-                <h2>Total: ${200}</h2>
+                <h2>Subtotal: ${subTotal}</h2>
+                <h2>Shipping: ${shipping}</h2>
+                <h2>Tax: ${tax}</h2>
+                <h2>Total: ${total}</h2>
             </aside>
         </div>
     )

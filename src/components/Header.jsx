@@ -1,18 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiShoppingBag } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
-  // const { cartItems } = useSelector(state => state.cart);
+  const dispatch = useDispatch();
+  const addToCart = () => {
+    dispatch({
+      type: "calculateTotal",
+    })
+  }
+  const { cartItems } = useSelector(state => state.cart);
   return (
     <nav>
       <h2>Logo Here</h2>
       <div>
         <Link to={'/'}>Home</Link>
-        <Link to={'/cart'}>
+        <Link to={'/cart'} onClick={() => addToCart()}>
           <FiShoppingBag />
-          <p>{0}</p>
+          <p>{cartItems.length}</p>
         </Link>
       </div>
     </nav>
